@@ -8,8 +8,8 @@ import org.hibernate.SessionFactory;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDaoInterface<T,ID>{
-    private SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
+public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T,ID> {
+    protected SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     @Override
     public void save(T t) {

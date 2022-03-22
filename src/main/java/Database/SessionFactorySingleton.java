@@ -1,8 +1,6 @@
 package Database;
 
-import entity.Account;
-import entity.Comment;
-import entity.Tweet;
+import entity.*;
 import lombok.var;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -25,6 +23,8 @@ public class SessionFactorySingleton {
                     .addAnnotatedClass(Account.class)
                     .addAnnotatedClass(Comment.class)
                     .addAnnotatedClass(Tweet.class)
+                    .addAnnotatedClass(Likes.class)
+                    .addAnnotatedClass(Follow.class)
                     .buildMetadata()
                     .buildSessionFactory();
         }

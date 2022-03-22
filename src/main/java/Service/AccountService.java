@@ -1,27 +1,28 @@
 package Service;
 
-import CustomException.AccountDoesNotExist;
-import CustomException.RecordDoesNotExist;
 import Repository.AccountRepository;
 import entity.Account;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountService extends BaseService<AccountRepository, Account, Integer> {
 
     private final AccountRepository accountRepository = new AccountRepository();
 
     public AccountService() {
-        super(new AccountRepository() , Account.class);
+        super(new AccountRepository(), Account.class);
     }
 
-    public Account findByUsername(String username) {
-        return accountRepository.findAll(Account.class)
-                .stream()
-                .filter(account -> account.getUsername().equals(username))
-                .findFirst()
-                .get();
+    public List<Account> findByUsername(String username) {
+        return accountRepository.findByUsername(username);
     }
 
-    public Account login(String username, String password) {
+    public Account findByUsernameId(String username) {
+        return accountRepository.findByUsernameId(username);
+    }
+
+        public Account login(String username, String password) {
         return accountRepository.findAll(Account.class)
                 .stream()
                 .filter(account -> account.getUsername().equals(username) && account.getPassword().equals(password))

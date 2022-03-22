@@ -1,12 +1,10 @@
 package entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,15 +19,25 @@ public class Tweet {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-    @Column(nullable = false , columnDefinition = "varchar(100)")
-    private String subject;
     @Column(nullable = false , columnDefinition = "varchar(280)")
     private String description;
+    @Column(nullable = false, columnDefinition = "date")
+    private Date date;
 
 
-    public Tweet(Account account, String subject, String description) {
+    public Tweet(Account account, String description, Date date) {
         this.account = account;
-        this.subject = subject;
         this.description = description;
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "tweet id=" + id +
+                ", account=" + account.getUsername() +
+                ", tweet='" + description + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

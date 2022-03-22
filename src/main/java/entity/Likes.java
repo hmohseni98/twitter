@@ -12,8 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "comment")
-public class Comment {
+public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,22 +22,22 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "tweet_id")
     private Tweet tweet;
-    @Column (nullable = false , columnDefinition = "varchar(280)")
-    private String description;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
-    public Comment(Account account, Tweet tweet, String description) {
+    public Likes(Account account, Tweet tweet, Type type) {
         this.account = account;
         this.tweet = tweet;
-        this.description = description;
+        this.type = type;
     }
 
     @Override
     public String toString() {
-        return "Comment{" +
-                "comment id=" + id +
-                ", tweet id='" + tweet.getId() + '\'' +
-                ", tweet='" + tweet.getDescription() + '\'' +
-                ", comment='" + description + '\'' +
+        return "LikeOrDislike{" +
+                "id=" + id +
+                ", account=" + account.getUsername() +
+                ", tweet=" + tweet.getDescription() +
+                ", type=" + type +
                 '}';
     }
 }
