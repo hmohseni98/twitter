@@ -22,11 +22,27 @@ public class FollowService extends BaseService<FollowRepository, Follow, Integer
         return followers;
     }
 
+    public Long findAllFollowerByAccName(String username) {
+        Long followers = followRepository.findAll(Follow.class)
+                .stream()
+                .filter(follow -> follow.getFollowings().getUsername().equals(username))
+                .count();
+        return followers;
+    }
+
     public List<Follow> findAllFollowingByAccountName(String username) {
         List<Follow> followings = followRepository.findAll(Follow.class)
                 .stream()
                 .filter(follow -> follow.getFollowers().getUsername().equals(username))
                 .collect(Collectors.toList());
+        return followings;
+    }
+
+    public Long findAllFollowingByAccName(String username) {
+        Long followings = followRepository.findAll(Follow.class)
+                .stream()
+                .filter(follow -> follow.getFollowers().getUsername().equals(username))
+                .count();
         return followings;
     }
 }

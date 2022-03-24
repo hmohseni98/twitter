@@ -23,8 +23,11 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "tweet_id")
     private Tweet tweet;
-    @Column (nullable = false , columnDefinition = "varchar(280)")
+    @Column(nullable = false, columnDefinition = "varchar(280)")
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment reply;
 
     public Comment(Account account, Tweet tweet, String description) {
         this.account = account;
@@ -32,13 +35,35 @@ public class Comment {
         this.description = description;
     }
 
+    public Comment(Account account, Tweet tweet, String description, Comment reply) {
+        this.account = account;
+        this.tweet = tweet;
+        this.description = description;
+        this.reply = reply;
+    }
+
     @Override
     public String toString() {
-        return "Comment{" +
-                "comment id=" + id +
-                ", tweet id='" + tweet.getId() + '\'' +
-                ", tweet='" + tweet.getDescription() + '\'' +
-                ", comment='" + description + '\'' +
-                '}';
+        try {
+            return "Comment{" +
+                    "id=" + id +
+                    ", account=" + account.getUsername() +
+                    ", tweet id=" + tweet.getId() +
+                    ", tweet=" + tweet.getDescription() +
+                    ", comment ='" + description + '\'' +
+                    ", reply id=" + reply.getId() +
+                    ", reply account=" + reply.getAccount().getUsername() +
+                    ", reply comment=" + reply.description +
+                    '}';
+        } catch (NullPointerException e){
+            return "Comment{" +
+                    "id=" + id +
+                    ", account=" + account.getUsername() +
+                    ", tweet id=" + tweet.getId() +
+                    ", tweet=" + tweet.getDescription() +
+                    ", comment='" + description + '\'' +
+                    ", reply=" + reply +
+                    '}';
+        }
     }
 }

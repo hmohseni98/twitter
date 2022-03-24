@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -42,8 +43,8 @@ public class Main {
                 throw new InvalidOption();
             }
         } catch (InvalidOption | InputMismatchException e) {
-            System.out.println(e.getMessage());
             scanner.nextLine();
+            System.out.println(e.getMessage());
             welcomeMenu();
         }
     }
@@ -137,7 +138,7 @@ public class Main {
             } else if (selectOption == 2) {
                 System.out.print("enter tweet id:");
                 Integer tweetId = scanner.nextInt();
-                likeService.removeLikeOrDislikeByTweetId(tweetId,loginAccount.getId());
+                likeService.removeLikeOrDislikeByTweetId(tweetId, loginAccount.getId());
                 likeServicesMenu();
             } else if (selectOption == 3) {
                 System.out.print("enter tweet id:");
@@ -200,9 +201,9 @@ public class Main {
                 throw new InvalidOption();
             }
         } catch (InvalidOption | InputMismatchException | NoResultException e) {
+            scanner.nextLine();
             System.out.println(e.getMessage());
             followServicesMenu();
-            scanner.nextLine();
         }
     }
 
@@ -217,6 +218,8 @@ public class Main {
             selectOption = scanner.nextInt();
             if (selectOption == 1) {
                 System.out.println(accountService.findById(loginAccount.getId()).toString2());
+                System.out.println("following= " + followService.findAllFollowerByAccName(loginAccount.getUsername())
+                        + " follower= " + followService.findAllFollowingByAccName(loginAccount.getUsername()));
                 accountServicesMenu();
             } else if (selectOption == 2) {
                 System.out.print("enter new password:");
@@ -239,9 +242,9 @@ public class Main {
                 throw new InvalidOption();
             }
         } catch (InvalidOption | InputMismatchException e) {
+            scanner.nextLine();
             System.out.println(e.getMessage());
             accountServicesMenu();
-            scanner.nextLine();
         }
     }
 
@@ -251,7 +254,8 @@ public class Main {
             System.out.println("2.show your tweets");
             System.out.println("3.show all tweets");
             System.out.println("4.edit tweet");
-            System.out.println("5.back to services menu");
+            System.out.println("5.remove tweet");
+            System.out.println("6.back to services menu");
             System.out.print("please select one option:");
             selectOption = scanner.nextInt();
             if (selectOption == 1) {
@@ -267,7 +271,12 @@ public class Main {
                 tweetService.findAllById(loginAccount.getId()).forEach(System.out::println);
                 tweetServicesMenu();
             } else if (selectOption == 3) {
-                tweetService.findAll().forEach(System.out::println);
+                List<Tweet> tweetList = tweetService.findAll();
+                for (Tweet t:tweetList) {
+                    System.out.println(t);
+                    System.out.println("like: " + likeService.findAllLikesByTweetId(t.getId()) +
+                            " dislike: " + likeService.findAllDislikesByTweetId(t.getId()));
+                }
                 tweetServicesMenu();
             } else if (selectOption == 4) {
                 System.out.print("enter tweet id:");
@@ -282,14 +291,20 @@ public class Main {
                 System.out.println("update success!");
                 tweetServicesMenu();
             } else if (selectOption == 5) {
+                System.out.print("enter tweet id:");
+                int tweetId = scanner.nextInt();
+                tweetService.delete(tweetService.findById(tweetId));
+                System.out.println("tweet deleted success!");
+                tweetServicesMenu();
+            } else if (selectOption == 6) {
                 mainMenu();
             } else {
                 throw new InvalidOption();
             }
-        } catch (TweetLengthOutOfRange | InputMismatchException | InvalidOption e) {
+        } catch (TweetLengthOutOfRange | InputMismatchException | InvalidOption | RecordDoesNotExist e) {
+            scanner.nextLine();
             System.out.println(e.getMessage());
             tweetServicesMenu();
-            scanner.nextLine();
         }
     }
 
@@ -309,8 +324,16 @@ public class Main {
                 scanner.nextLine();
                 System.out.print("enter comment:");
                 String comment = scanner.nextLine();
-                commentService.save(new Comment(loginAccount, tweetService.findById(tweet_id), comment));
-                System.out.println("your comment added success!");
+                System.out.print("please enter comment id for replay or enter '-1' for submit comment:");
+                int comment_id = scanner.nextInt();
+                if (comment_id == -1) {
+                    commentService.save(new Comment(loginAccount, tweetService.findById(tweet_id), comment));
+                    System.out.println("your comment added success!");
+                } else {
+                    Comment replay = commentService.findById(comment_id);
+                    commentService.save(new Comment(loginAccount, tweetService.findById(tweet_id), comment, replay));
+                    System.out.println("your replay added success!");
+                }
                 commentServicesMenu();
             } else if (selectOption == 2) {
                 System.out.print("enter comment id:");
@@ -342,10 +365,10 @@ public class Main {
             } else {
                 throw new InvalidOption();
             }
-        } catch (InputMismatchException | InvalidOption e) {
+        } catch (InputMismatchException | InvalidOption | RecordDoesNotExist e) {
+            scanner.nextLine();
             System.out.println(e.getMessage());
             commentServicesMenu();
-            scanner.nextLine();
         }
     }
 
