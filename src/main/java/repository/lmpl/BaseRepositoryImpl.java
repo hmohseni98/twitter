@@ -1,6 +1,7 @@
-package Repository;
+package repository.lmpl;
 
-import Database.SessionFactorySingleton;
+import database.SessionFactorySingleton;
+import repository.base.BaseRepository;
 import lombok.var;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -8,7 +9,7 @@ import org.hibernate.SessionFactory;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T,ID> {
+public abstract class BaseRepositoryImpl<T, ID extends Serializable> implements BaseRepository<T,ID> {
     protected SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     @Override

@@ -1,12 +1,13 @@
-package Repository;
+package repository.lmpl;
 
 
+import repository.infc.AccountInterface;
 import entity.Account;
 import lombok.var;
 
 import java.util.List;
 
-public class AccountRepository extends BaseDaoImpl<Account, Integer> implements AccountInterface {
+public class AccountRepository extends BaseRepositoryImpl<Account, Integer> implements AccountInterface {
 
     @Override
     public List<Account> findByUsername(String username) {

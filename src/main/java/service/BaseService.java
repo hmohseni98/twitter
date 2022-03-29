@@ -1,12 +1,12 @@
-package Service;
+package service;
 
 
-import CustomException.RecordDoesNotExist;
-import Repository.BaseDaoImpl;
+import customException.RecordDoesNotExist;
+import repository.lmpl.BaseRepositoryImpl;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class BaseService<R extends BaseDaoImpl<E, ID>, E, ID extends Serializable> {
+public abstract class BaseService<R extends BaseRepositoryImpl<E, ID>, E, ID extends Serializable> {
     private R r;
     private Class<E> eClass;
 

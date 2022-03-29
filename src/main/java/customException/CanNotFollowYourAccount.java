@@ -1,4 +1,4 @@
-package CustomException;
+package customException;
 
 public class CanNotFollowYourAccount extends RuntimeException{
     public CanNotFollowYourAccount() {

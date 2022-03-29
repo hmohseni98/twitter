@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Repository.LikeRepository;
+import repository.lmpl.LikeRepository;
 import entity.Likes;
 import entity.Type;
 

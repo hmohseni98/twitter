@@ -1,4 +1,4 @@
-package CustomException;
+package customException;
 
 public class AlreadyPointThatTweet extends RuntimeException{
     public AlreadyPointThatTweet() {

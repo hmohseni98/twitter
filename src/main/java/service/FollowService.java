@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Repository.FollowRepository;
+import repository.lmpl.FollowRepository;
 import entity.Follow;
 
 import java.util.List;

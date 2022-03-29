@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Repository.TweetRepository;
+import repository.lmpl.TweetRepository;
 import entity.Tweet;
 
 import java.util.List;

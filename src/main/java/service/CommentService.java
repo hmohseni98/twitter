@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Repository.CommentRepository;
+import repository.lmpl.CommentRepository;
 import entity.Comment;
 
 import java.util.List;

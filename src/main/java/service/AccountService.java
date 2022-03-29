@@ -1,10 +1,9 @@
-package Service;
+package service;
 
-import Repository.AccountRepository;
+import repository.lmpl.AccountRepository;
 import entity.Account;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AccountService extends BaseService<AccountRepository, Account, Integer> {
 

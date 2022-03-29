@@ -1,4 +1,4 @@
-package CustomException;
+package customException;
 
 public class RecordDoesNotExist extends RuntimeException{
 
